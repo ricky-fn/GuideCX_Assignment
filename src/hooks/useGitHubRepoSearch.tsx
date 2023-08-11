@@ -25,7 +25,7 @@ interface IGitHubRepoSearchResult {
 }
 
 export function useGitHubRepoSearch(searchQuery: string): IGitHubRepoSearchResult {
-  const debouncedSearchQuery = useDebounce(searchQuery, 300); // Debounce with 300ms delay
+  const debouncedSearchQuery = useDebounce(searchQuery, 500); // Debounce with 500ms delay
 
   const searchUrl = `/search/repositories?q=${debouncedSearchQuery}`;
   const { data, error } = useSWR<IGitHubRepos>(
