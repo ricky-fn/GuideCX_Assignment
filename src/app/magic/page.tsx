@@ -1,11 +1,9 @@
-import SearchBar from "@/components/SearchBar";
-import RepoList from "@/components/RepoList";
+import RepoSearchContainer from "@/components/RepoSearchContainer";
 
 export default function MagicPage() {
   return (
     <>
-      <SearchBar />
-      <RepoList />
+      <RepoSearchContainer />
     </>
   )
 }

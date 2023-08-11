@@ -1,13 +1,7 @@
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
 import useDebounce from './useDebounce';
 import { Octokit } from "octokit";
-
-interface Repo {
-  id: number;
-  name: string;
-  // Add other properties as needed
-}
+import { Endpoints } from '@octokit/types';
 
 const octokit = new Octokit({
   auth: process.env.NEXT_PUBLIC_GITHUB_ACCESS_KEY,
@@ -22,24 +16,24 @@ export const fetcher = async (url: string) => {
   return response.data;
 };
 
-interface GitHubRepoSearchResult {
-  searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  data: Repo[] | undefined;
+type IGitHubRepos = Endpoints['GET /search/repositories']['response']['data'];
+
+interface IGitHubRepoSearchResult {
+  data: IGitHubRepos | undefined;
   error: any;
   isLoading: boolean;
 }
 
-export default function useGitHubRepoSearch(): GitHubRepoSearchResult {
-  const [searchQuery, setSearchQuery] = useState('');
-  const debouncedSearchQuery = useDebounce<string>(searchQuery, 300); // Debounce with 300ms delay
+export function useGitHubRepoSearch(searchQuery: string): IGitHubRepoSearchResult {
+  const debouncedSearchQuery = useDebounce(searchQuery, 300); // Debounce with 300ms delay
 
   const searchUrl = `/search/repositories?q=${debouncedSearchQuery}`;
-  const { data, error } = useSWR<Repo[] | undefined>(debouncedSearchQuery ? searchUrl : null, fetcher);
+  const { data, error } = useSWR<IGitHubRepos>(
+    debouncedSearchQuery ? searchUrl : null,
+    fetcher
+  );
 
   return {
-    searchQuery,
-    setSearchQuery,
     data,
     error,
     isLoading: !data && !error,
