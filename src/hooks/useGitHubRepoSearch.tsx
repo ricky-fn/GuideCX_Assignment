@@ -30,7 +30,8 @@ export function useGitHubRepoSearch(searchQuery: string): IGitHubRepoSearchResul
   const searchUrl = `/search/repositories?q=${debouncedSearchQuery}`;
   const { data, error } = useSWR<IGitHubRepos>(
     debouncedSearchQuery ? searchUrl : null,
-    fetcher
+    fetcher,
+    { suspense: true }
   );
 
   return {

@@ -1,7 +1,8 @@
 'use client';
 import SearchBar from "@/components/SearchBar";
 import RepoList from "@/components/RepoList";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import Placeholder from "@/components/Placeholder";
 
 export default function RepoSearchContainer() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,7 +29,10 @@ export default function RepoSearchContainer() {
           </svg>
         }
       />
-      <RepoList searchQuery={searchQuery} />
+      {/* <Placeholder /> */}
+      <Suspense fallback={<Placeholder />}>
+        <RepoList searchQuery={searchQuery} />
+      </Suspense>
     </>
   )
 }
