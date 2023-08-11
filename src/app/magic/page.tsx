@@ -1,4 +1,10 @@
 import RepoSearchContainer from "@/components/RepoSearchContainer";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: 'GitHub Repo Search',
+};
 
 export default function MagicPage() {
   return (

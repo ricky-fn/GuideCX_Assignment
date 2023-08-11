@@ -16,6 +16,7 @@ export default function RepoSearchContainer() {
       <SearchBar
         onChange={handleSearch}
         value={searchQuery}
+        placeholder="Search GitHub Repositories Here"
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
